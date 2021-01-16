@@ -1,0 +1,75 @@
+## ----------------------------------------------------------------------------
+## ..:: InfluxDB 2.0 POD / Deployment ::..
+##-----------------------------------------------------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: influxdb
+  namespace: performance-monitoring
+  labels:
+    app: influxdb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: influxdb
+  template:
+    metadata:
+      labels:
+        app: influxdb
+    spec:
+      containers:
+      - env:
+        image: quay.io/influxdb/influxdb:v2.0.1
+        imagePullPolicy: IfNotPresent
+        name: influcdb
+        ports:
+        - containerPort: 8086
+          name: influxdb
+          protocol: TCP
+        volumeMounts:
+        - name: influxdb-persistent-storage
+          mountPath: /root/.influxdbv2
+          subPath: performance-monitoring/influxdb
+      volumes:
+      - name: influxdb-persistent-storage
+        persistentVolumeClaim:
+          claimName: performance-monitoring-pvc
+---
+## ----------------------------------------------------------------------------
+## ..:: InfluxDB 2.0 POD / Service Configuration ::..
+##-----------------------------------------------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: influxdb
+  namespace: performance-monitoring
+  labels:
+    app: influxdb
+spec:
+  type: ClusterIP
+  ports:
+  - name: influxdb-30080860
+    port: 8086
+    protocol: TCP
+  selector:
+      app: influxdb
+---
+## ----------------------------------------------------------------------------
+## ..:: InfluxDB 2.0 POD / NGINX KIC Plus VS Configuration ::..
+##-----------------------------------------------------------------------------
+apiVersion: k8s.nginx.org/v1
+kind: VirtualServer
+metadata:
+  name: influxdb-vs
+  namespace: performance-monitoring
+spec:
+  host: influxdb.internal.x-wide.cloud
+  upstreams:
+  - name: influxdb
+    service: influxdb
+    port: 8086
+  routes:
+  - path: /
+    action:
+      pass: influxdb

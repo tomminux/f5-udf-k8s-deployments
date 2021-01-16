@@ -1,0 +1,39 @@
+## ----------------------------------------------------------------------------
+## ..:: infra-server installation ::..
+## ----------------------------------------------------------------------------
+
+- hosts: infra-server
+  remote_user: root
+  tasks:
+
+    ## Configure and Deploy Services in "blog-apps" namespace
+
+    - name: Creating Namepsaces
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/e-commerce/0.namespace-preparation/0.namespace.yaml"
+
+    - name: Deploying PV / PVC foro persistent flie storage
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/e-commerce/0.namespace-preparation/1.nfs-pv-pvc.yaml"
+
+    - name: Deploying Common NGINX Plus resources
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/e-commerce/0.namespace-preparation/2.nginx-plus-common.yaml"
+
+    - name: Deploying NGINX Plus Ingress Controller PODs and Services
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/e-commerce/0.namespace-preparation/3.nplus-nap.yaml"
+
+    - name: Deploying BIG-IP Controller Config Map 
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/e-commerce/0.namespace-preparation/4.bigip-ctlr-configMap.yaml"
+
+    - name: Deploying MYSQL DB Server for blog-apps services
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/e-commerce/0.namespace-preparation/5.mysql.yaml"

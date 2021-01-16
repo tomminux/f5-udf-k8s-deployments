@@ -1,0 +1,44 @@
+## ----------------------------------------------------------------------------
+## ..:: Ubuntu-DEV POD / Service Configuration ::..
+##-----------------------------------------------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: ubuntu-dev
+  namespace: performance-monitoring
+spec:
+  ports:
+  - port: 22
+  selector:
+    app: ubuntu-dev
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: ubuntu-dev
+  namespace: performance-monitoring
+spec:
+  selector:
+    matchLabels:
+      app: ubuntu-dev
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: ubuntu-dev
+    spec:
+      containers:
+      - image: registry.k8s.x-wide.cloud:5000/ubuntu-dev:latest
+        name: ubuntu-dev
+        ports:
+        - containerPort: 22
+          name: ubuntu-dev
+        volumeMounts:
+        - name: ubuntu-dev-persistent-storage
+          mountPath: /nfs-storage
+          subPath: performance-monitoring/ubuntu-dev
+      volumes:
+      - name: ubuntu-dev-persistent-storage
+        persistentVolumeClaim:
+          claimName: performance-monitoring-nfs-pvc

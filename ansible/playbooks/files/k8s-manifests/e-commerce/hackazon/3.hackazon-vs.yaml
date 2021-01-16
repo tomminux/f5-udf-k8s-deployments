@@ -1,0 +1,18 @@
+## ----------------------------------------------------------------------------
+## ..:: NGINX KIC VS Configuration for Hackazon ::..
+##-----------------------------------------------------------------------------
+apiVersion: k8s.nginx.org/v1
+kind: VirtualServer
+metadata:
+  name: hackazon-vs
+  namespace: e-commerce
+spec:
+  host: hackazon.f5-udf.com
+  upstreams:
+  - name: hackazon
+    service: hackazon
+    port: 80
+  routes:
+  - path: /
+    action:
+      pass: hackazon

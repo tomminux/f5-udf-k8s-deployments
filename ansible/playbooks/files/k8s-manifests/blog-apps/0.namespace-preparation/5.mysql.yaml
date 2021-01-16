@@ -1,0 +1,48 @@
+## ----------------------------------------------------------------------------
+## ..:: Mysql POD / Service Configuration ::..
+##-----------------------------------------------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-blog-apps
+  namespace: blog-apps
+spec:
+  ports:
+  - port: 3306
+  selector:
+    app: mysql-blog-apps
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-blog-apps
+  namespace: blog-apps
+spec:
+  selector:
+    matchLabels:
+      app: mysql-blog-apps
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql-blog-apps
+    spec:
+      containers:
+      - image: mysql:5.6
+        name: mysql
+        env:
+          # Use secret in real usage
+        - name: MYSQL_ROOT_PASSWORD
+          value: Default1234!
+        ports:
+        - containerPort: 3306
+          name: mysql-blog-apps
+        volumeMounts:
+        - name: blog-apps-persistent-storage
+          mountPath: /var/lib/mysql
+          subPath: blog-apps/mysql
+      volumes:
+      - name: blog-apps-persistent-storage
+        persistentVolumeClaim:
+          claimName: blog-apps-pvc

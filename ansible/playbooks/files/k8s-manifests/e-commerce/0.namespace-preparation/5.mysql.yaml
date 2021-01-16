@@ -1,0 +1,48 @@
+## ----------------------------------------------------------------------------
+## ..:: Mysql POD / Service Configuration ::..
+##-----------------------------------------------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-hackazon
+  namespace: e-commerce
+spec:
+  ports:
+  - port: 3306
+  selector:
+    app: mysql-hackazon
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-hackazon
+  namespace: e-commerce
+spec:
+  selector:
+    matchLabels:
+      app: mysql-hackazon
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql-hackazon
+    spec:
+      containers:
+      - image: mysql:5.6
+        name: mysql
+        env:
+          # Use secret in real usage
+        - name: MYSQL_ROOT_PASSWORD
+          value: Default1234!
+        ports:
+        - containerPort: 3306
+          name: mysql-hackazon
+        volumeMounts:
+        - name: e-commerce-persistent-storage
+          mountPath: /var/lib/mysql
+          subPath: e-commerce/hackazon/mysql
+      volumes:
+      - name: e-commerce-persistent-storage
+        persistentVolumeClaim:
+          claimName: e-commerce-pvc

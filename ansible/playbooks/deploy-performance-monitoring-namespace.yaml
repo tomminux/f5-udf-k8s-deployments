@@ -1,0 +1,35 @@
+## ----------------------------------------------------------------------------
+## ..:: performance-monitorong installation ::..
+## ----------------------------------------------------------------------------
+
+- hosts: infra-server
+  remote_user: root
+  tasks:
+
+    ## k8s-manifests file 
+    - name: Copy k8s-manifests files  
+      copy:
+        src: k8s-manifests
+        dest: /home/ubuntu
+        owner: ubuntu
+        group: ubuntu
+
+    ## Filesystem preparation - NFS Storage Configuration
+    - name: 
+      file:
+        path: /home/ubuntu/dockerhost-storage/nfs-storage/prometheus/data
+        state: directory
+        owner: 1000
+        group: 1000
+
+    ## Configure and Deploy Services in "blog-apps" namespace
+
+    - name: Creating performnance-monitoring namespace
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/performance-monitoring/0.namespace-preparation/0.namespace.yaml"
+
+    - name: Deploying PV / PVC for persistent flie storage
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/performance-monitoring/0.namespace-preparation/1.nfs-pv-pvc.yaml"

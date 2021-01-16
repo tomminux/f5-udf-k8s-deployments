@@ -1,0 +1,18 @@
+## ----------------------------------------------------------------------------
+## ..:: Hackazon POD / Service Configuration ::..
+##-----------------------------------------------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: hackazon
+  namespace: e-commerce
+  labels:
+    app: hackazon
+spec:
+  type: ClusterIP
+  ports:
+  - name: hackazon-80
+    port: 80
+    protocol: TCP
+  selector:
+      app: hackazon

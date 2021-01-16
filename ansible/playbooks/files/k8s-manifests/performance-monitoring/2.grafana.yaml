@@ -1,0 +1,77 @@
+## ----------------------------------------------------------------------------
+## ..:: Grafana POD / Deployment ::..
+##-----------------------------------------------------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+  namespace: performance-monitoring
+  labels:
+    app: grafana
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: grafana
+        version: v1
+    spec:
+      containers:
+      - env:
+        image: grafana/grafana:latest
+        imagePullPolicy: IfNotPresent
+        name: grafana
+        ports:
+        - containerPort: 3000
+          protocol: TCP
+        volumeMounts:
+        - name: grafana-persistent-storage
+          mountPath: /var/lib/grafana
+          subPath: performance-monitoring/grafana
+      volumes:
+      - name: grafana-persistent-storage
+        persistentVolumeClaim:
+          claimName: performance-monitoring-pvc
+---
+## ----------------------------------------------------------------------------
+## ..:: Grafana POD / Service Configuration ::..
+##-----------------------------------------------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+  namespace: performance-monitoring
+  labels:
+    app: grafana
+spec:
+  type: ClusterIP
+  ports:
+  - name: grafana-3000
+    port: 3000
+    protocol: TCP
+  selector:
+      app: grafana
+---
+## ----------------------------------------------------------------------------
+## ..:: Grafana POD / NGINX KIC Plus VS Configuration ::..
+##-----------------------------------------------------------------------------
+apiVersion: k8s.nginx.org/v1
+kind: VirtualServer
+metadata:
+  name: grafana-vs
+  namespace: performance-monitoring
+spec:
+  host: grafana.internal.x-wide.cloud
+  upstreams:
+  - name: grafana
+    service: grafana
+    port: 3000
+  routes:
+  - path: /
+    action:
+      pass: grafana

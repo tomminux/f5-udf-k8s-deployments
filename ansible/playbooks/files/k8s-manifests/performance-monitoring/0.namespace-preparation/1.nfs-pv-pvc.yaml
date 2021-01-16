@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: performance-monitoring-nfs-pv
+spec:
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: performance-monitoring-nfs
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    path: /home/ubuntu/dockerhost-storage/nfs-storage
+    server: 10.1.20.20
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: performance-monitoring-pvc
+  namespace: performance-monitoring
+spec:
+  storageClassName: performance-monitoring-nfs
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
