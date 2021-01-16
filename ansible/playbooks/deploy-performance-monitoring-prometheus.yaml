@@ -1,0 +1,17 @@
+## ----------------------------------------------------------------------------
+## ..:: performance-monitorong installation ::..
+## ----------------------------------------------------------------------------
+
+- hosts: infra-server
+  remote_user: root
+  tasks:
+
+    - name: Deploying prometheus Cluster Role and RoleBinging, POD and Service, Config Map
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/performance-monitoring/1.prometheus.yaml"
+
+    - name: Deploying bigip controller config map
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/performance-monitoring/9.bigip-ctlr-configMap.yaml"

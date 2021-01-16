@@ -17,7 +17,7 @@
     ## Filesystem preparation - NFS Storage Configuration
     - name: 
       file:
-        path: /home/ubuntu/dockerhost-storage/nfs-storage/prometheus/data
+        path: /home/ubuntu/dockerhost-storage/nfs-storage/performance-monitoring/prometheus/data
         state: directory
         owner: 1000
         group: 1000
