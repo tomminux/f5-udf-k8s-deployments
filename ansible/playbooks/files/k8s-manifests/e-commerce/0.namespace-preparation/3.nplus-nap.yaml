@@ -134,3 +134,26 @@ spec:
     protocol: TCP
   selector:
     app: nginx-ingress-e-commerce
+---
+## ----------------------------------------------------------------------------
+## ..:: NGINX Plus ClusterIP Service - Port 8080 ::..
+## ----------------------------------------------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: e-commerce-kic-8080
+  namespace: e-commerce
+  labels:
+    app: nginx-ingress
+    cis.f5.com/as3-tenant: e-commerce
+    cis.f5.com/as3-app: e-commerce-kic-8080
+    cis.f5.com/as3-pool: e-commerce-kic-pool-8080
+spec:
+  type: ClusterIP
+  ports:
+  - name: http-8080
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+  selector:
+    app: nginx-ingress-e-commerce

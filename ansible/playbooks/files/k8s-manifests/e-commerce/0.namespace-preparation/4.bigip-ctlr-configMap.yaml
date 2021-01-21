@@ -44,6 +44,30 @@ data:
                         ]
                     }
                 },
+                "e-commerce-kic-8080": {
+                    "class": "Application",
+                    "template": "generic",
+                    "e-commerce-kic-8080-vs": {
+                        "class": "Service_HTTP",
+                        "remark": "e-commerce-kic-8080",
+                        "virtualAddresses": [
+                            "10.1.10.101"
+                        ],
+                        "pool": "e-commerce-kic-pool-8080"
+                    },
+                    "e-commerce-kic-pool-8080": {
+                        "class": "Pool",
+                        "monitors": [
+                            "http"
+                        ],
+                        "members": [
+                            {
+                                "servicePort": 8080,
+                                "serverAddresses": []
+                            }
+                        ]
+                    }
+                },
                 "e-commerce-kic-443": {
                     "class": "Application",
                     "template": "generic",

@@ -44,6 +44,30 @@ data:
                         ]
                     }
                 },
+                "blog-apps-kic-8080": {
+                    "class": "Application",
+                    "template": "generic",
+                    "blog-apps-kic-8080-vs": {
+                        "class": "Service_HTTP",
+                        "remark": "blog-apps-kic-8080",
+                        "virtualAddresses": [
+                            "10.1.10.101"
+                        ],
+                        "pool": "blog-apps-kic-pool-8080"
+                    },
+                    "blog-apps-kic-pool-8080": {
+                        "class": "Pool",
+                        "monitors": [
+                            "http"
+                        ],
+                        "members": [
+                            {
+                                "servicePort": 8080,
+                                "serverAddresses": []
+                            }
+                        ]
+                    }
+                },
                 "blog-apps-kic-443": {
                     "class": "Application",
                     "template": "generic",
