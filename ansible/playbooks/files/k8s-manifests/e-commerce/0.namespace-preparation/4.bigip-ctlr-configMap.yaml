@@ -50,6 +50,7 @@ data:
                     "e-commerce-kic-8080-vs": {
                         "class": "Service_HTTP",
                         "remark": "e-commerce-kic-8080",
+                        "virtualPort": 8080,
                         "virtualAddresses": [
                             "10.1.10.101"
                         ],

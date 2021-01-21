@@ -62,6 +62,7 @@ spec:
           - -watch-namespace=blog-apps
           - -v=3 # Enables extensive logging. Useful for troubleshooting.
           - -report-ingress-status
+          - -nginx-status-allow-cidrs=10.0.0.0/8
          #- -external-service=nginx-ingress
           - -enable-prometheus-metrics
          #- -global-configuration=$(POD_NAMESPACE)/nginx-configuration
