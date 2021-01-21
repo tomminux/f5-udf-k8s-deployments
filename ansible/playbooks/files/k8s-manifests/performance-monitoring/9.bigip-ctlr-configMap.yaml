@@ -27,7 +27,7 @@ data:
                         "class": "Service_HTTP",
                         "remark": "prometheus-9090",
                         "virtualAddresses": [
-                            "10.1.10.105"
+                            "10.1.10.206"
                         ],
                         "pool": "prometheus-pool-9090"
                     },
