@@ -299,6 +299,22 @@ spec:
     port: 80
     targetPort: 8080
 ### --->>> ADD KIC VS HERE <<<---
+---
+apiVersion: k8s.nginx.org/v1
+kind: VirtualServer
+metadata:
+  name: online-boutique-vs
+  namespace: e-commerce
+spec:
+  host: online-boutique.f5-udf.com
+  upstreams:
+  - name: online-boutique-frontend
+    service: frontend
+    port: 80
+  routes:
+  - path: /
+    action:
+      pass: online-boutique-frontend
 #---
 #apiVersion: v1
 #kind: Service
