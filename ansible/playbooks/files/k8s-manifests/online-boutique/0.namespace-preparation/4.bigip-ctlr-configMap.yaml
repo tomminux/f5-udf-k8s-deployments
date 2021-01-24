@@ -27,7 +27,7 @@ data:
                         "class": "Service_HTTP",
                         "remark": "online-boutique-kic-80",
                         "virtualAddresses": [
-                            "10.1.10.101"
+                            "10.1.10.103"
                         ],
                         "pool": "online-boutique-kic-pool-80"
                     },
@@ -52,7 +52,7 @@ data:
                         "remark": "online-boutique-kic-8080",
                         "virtualPort": 8080,
                         "virtualAddresses": [
-                            "10.1.10.101"
+                            "10.1.10.103"
                         ],
                         "pool": "online-boutique-kic-pool-8080"
                     },
@@ -76,7 +76,7 @@ data:
                         "class": "Service_TCP",
                         "remark": "online-boutique-kic-443",
                         "virtualAddresses": [
-                            "10.1.10.101"
+                            "10.1.10.103"
                         ],
                         "virtualPort": 443,
                         "pool": "online-boutique-kic-pool-443"
