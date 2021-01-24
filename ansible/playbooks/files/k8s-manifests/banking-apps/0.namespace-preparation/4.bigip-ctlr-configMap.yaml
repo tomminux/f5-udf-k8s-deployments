@@ -93,31 +93,6 @@ data:
                             }
                         ]
                     }
-                },
-                "banking-app-kic-9113": {
-                    "class": "Application",
-                    "template": "generic",
-                    "banking-app-kic-9113-vs": {
-                        "class": "Service_TCP",
-                        "remark": "banking-app-kic-9113",
-                        "virtualAddresses": [
-                            "10.1.10.101"
-                        ],
-                        "virtualPort": 9113,
-                        "pool": "banking-app-kic-pool-9113"
-                    },
-                    "banking-app-kic-pool-9113": {
-                        "class": "Pool",
-                        "monitors": [
-                            "tcp"
-                        ],
-                        "members": [
-                            {
-                                "servicePort": 9113,
-                                "serverAddresses": []
-                            }
-                        ]
-                    }
                 }
             }
         }
