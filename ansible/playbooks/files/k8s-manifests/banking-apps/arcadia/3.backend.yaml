@@ -1,0 +1,50 @@
+## -------------------------------------
+## ..:: Backend app in Arcadia UNIT ::..
+## -------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: arcadia-unit
+  labels:
+    app: arcadia-unit-backend
+spec:
+  type: ClusterIP
+  ports:
+  - name: arcadia-unit-backend-80
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+      app: arcadia-unit-backend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: arcadia-unit-backend
+  namespace: arcadia-unit
+  labels:
+    app: arcadia-unit-backend
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: arcadia-unit-backend
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: arcadia-unit-backend
+        version: v1
+    spec:
+      containers:
+      - env:
+        - name: service_name
+          value: backend
+        image: registry.f5-udf.com:5000/arcadia-backend:unit
+        imagePullPolicy: Always
+        name: arcadia-unit-backend
+        ports:
+        - containerPort: 8080
+          protocol: TCP
