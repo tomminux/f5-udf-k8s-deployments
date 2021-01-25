@@ -1,0 +1,110 @@
+---
+## ----------------------------------------------------------------------------
+## ..:: Hackazon POD / Service Configuration ::..
+##-----------------------------------------------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: hackazon-nap
+  namespace: e-commerce
+  labels:
+    app: hackazon-nap
+spec:
+  type: ClusterIP
+  ports:
+  - name: hackazon-nap
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+  selector:
+      app: hackazon-nap
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hackazon-nap
+  namespace: e-commerce
+  labels:
+    app: hackazon-nap
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hackazon-nap
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: hackazon-nap
+        version: v1
+    spec:
+      containers:
+      - image:  mutzel/all-in-one-hackazon
+        imagePullPolicy: IfNotPresent
+        name: hackazon-nap
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        volumeMounts:
+        - name: hackazon-persistent-storage
+          mountPath: /var/www/hackazon
+          subPath: e-commerce/hackazon/hackazon
+      - image: registry.f5-udf.com:5000/nginx-nap:latest
+        imagePullPolicy: Always
+        name: hackazon-nginx-app-protect
+        ports:
+        - name: http
+          containerPort: 8080
+        - name: https
+          containerPort: 443
+        volumeMounts:
+        - mountPath: /etc/nginx/waf
+          readOnly: true
+          name: nginx-waf
+        - mountPath: /etc/nginx/conf.d
+          readOnly: true
+          name: nginx-config
+        securityContext:
+          allowPrivilegeEscalation: true
+          capabilities:
+            drop:
+            - ALL
+            add:
+            - CAP_NET_BIND_SERVICE
+          procMount: Default
+          runAsUser: 0
+          runAsGroup: 0
+          privileged: true
+      volumes:
+      - name: hackazon-persistent-storage
+        persistentVolumeClaim:
+          claimName: e-commerce-pvc
+      - name: nginx-config
+        configMap:
+          name: nginx-config
+      - name: nginx-waf
+        configMap:
+          name: nginx-waf
+      imagePullSecrets:
+        - name: regcred
+          
+---
+## ----------------------------------------------------------------------------
+## ..:: NGINX KIC VS Configuration for Hackazon ::..
+##-----------------------------------------------------------------------------
+apiVersion: k8s.nginx.org/v1
+kind: VirtualServer
+metadata:
+  name: hackazon-nap-vs
+  namespace: e-commerce
+spec:
+  host: hackazon-nap.f5-udf.com
+  upstreams:
+  - name: hackazon-nap
+    service: hackazon-nap
+    port: 8080
+  routes:
+  - path: /
+    action:
+      pass: hackazon-nap
