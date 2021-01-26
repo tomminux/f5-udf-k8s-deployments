@@ -1,0 +1,24 @@
+## ----------------------------------------------------------------------------
+## ..:: infra-server installation ::..
+## ----------------------------------------------------------------------------
+
+- hosts: infra-server
+  remote_user: root
+  tasks:
+
+    ## Configure and Deploy Services in "blog-apps" namespace
+
+    - name: Undeploying Hackazon Ingress
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/nap-e-commerce/hackazon/3.hackazon-ingress.yaml"
+
+    - name: Undeploying Hackazon Service
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/nap-e-commerce/hackazon/2.hackazon-services.yaml"
+
+    - name: Undeploying Hackazon POD
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/nap-e-commerce/hackazon/1.hackazon.yaml"

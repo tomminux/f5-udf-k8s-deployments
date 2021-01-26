@@ -31,7 +31,7 @@ spec:
         volumeMounts:
         - name: hackazon-persistent-storage
           mountPath: /var/www/hackazon
-          subPath: nap-e-commerce/hackazon/hackazon
+          subPath: e-commerce/hackazon/hackazon
       volumes:
       - name: hackazon-persistent-storage
         persistentVolumeClaim:

@@ -47,19 +47,3 @@
       become: true
       become_user: ubuntu
       command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/nap-e-commerce/0.namespace-preparation/7.mysql.yaml"
-
-    - name: Deploying Hackazon POD
-      become: true
-      become_user: ubuntu
-      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/nap-e-commerce/hackazon/1.hackazon.yaml"
-
-    - name: Deploying Hackazon Service
-      become: true
-      become_user: ubuntu
-      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/nap-e-commerce/hackazon/2.hackazon-services.yaml"
-
-    - name: Deploying Hackazon Ingress
-      become: true
-      become_user: ubuntu
-      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/nap-e-commerce/hackazon/3.hackazon-ingress.yaml"
-

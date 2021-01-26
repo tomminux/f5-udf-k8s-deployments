@@ -1,0 +1,14 @@
+## ----------------------------------------------------------------------------
+## ..:: infra-server installation ::..
+## ----------------------------------------------------------------------------
+
+- hosts: infra-server
+  remote_user: root
+  tasks:
+
+    ## Configure and Deploy Services in "blog-apps" namespace
+
+    - name: Undeploying Wordpress Customer 2
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/blog-apps/wordpress/wp-c2.yaml"
