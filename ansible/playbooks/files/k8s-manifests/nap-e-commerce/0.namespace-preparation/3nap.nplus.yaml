@@ -4,17 +4,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-ingress-e-commerce
-  namespace: e-commerce
+  name: nginx-ingress-nap-e-commerce
+  namespace: nap-e-commerce
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx-ingress-e-commerce
+      app: nginx-ingress-nap-e-commerce
   template:
     metadata:
       labels:
-        app: nginx-ingress-e-commerce
+        app: nginx-ingress-nap-e-commerce
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "9113"
@@ -59,7 +59,7 @@ spec:
           - -nginx-plus
           - -nginx-configmaps=$(POD_NAMESPACE)/nginx-config
           - -default-server-tls-secret=$(POD_NAMESPACE)/default-server-secret
-          - -watch-namespace=e-commerce
+          - -watch-namespace=nap-e-commerce
           - -v=3 # Enables extensive logging. Useful for troubleshooting.
           - -report-ingress-status
           - -nginx-status-allow-cidrs=10.0.0.0/8
@@ -74,13 +74,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: e-commerce-kic-80
-  namespace: e-commerce
+  name: nap-e-commerce-kic-80
+  namespace: nap-e-commerce
   labels:
-    app: nginx-ingress-e-commerce
-    cis.f5.com/as3-tenant: e-commerce
-    cis.f5.com/as3-app: e-commerce-kic-80
-    cis.f5.com/as3-pool: e-commerce-kic-pool-80
+    app: nginx-ingress-nap-e-commerce
+    cis.f5.com/as3-tenant: nap-e-commerce
+    cis.f5.com/as3-app: nap-e-commerce-kic-80
+    cis.f5.com/as3-pool: nap-e-commerce-kic-pool-80
 spec:
   type: ClusterIP
   ports:
@@ -89,7 +89,7 @@ spec:
     targetPort: 80
     protocol: TCP
   selector:
-    app: nginx-ingress-e-commerce
+    app: nginx-ingress-nap-e-commerce
 ---
 ## ----------------------------------------------------------------------------
 ## ..:: NGINX Plus ClusterIP Service - Port 80 ::..
@@ -97,13 +97,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: e-commerce-kic-9113
-  namespace: e-commerce
+  name: nap-e-commerce-kic-9113
+  namespace: nap-e-commerce
   labels:
-    app: nginx-ingress-e-commerce
-    cis.f5.com/as3-tenant: e-commerce
-    cis.f5.com/as3-app: e-commerce-kic-9113
-    cis.f5.com/as3-pool: e-commerce-kic-pool-9113
+    app: nginx-ingress-nap-e-commerce
+    cis.f5.com/as3-tenant: nap-e-commerce
+    cis.f5.com/as3-app: nap-e-commerce-kic-9113
+    cis.f5.com/as3-pool: nap-e-commerce-kic-pool-9113
 spec:
   type: ClusterIP
   ports:
@@ -112,7 +112,7 @@ spec:
     targetPort: 9113
     protocol: TCP
   selector:
-    app: nginx-ingress-e-commerce
+    app: nginx-ingress-nap-e-commerce
 ---
 ## ----------------------------------------------------------------------------
 ## ..:: NGINX Plus ClusterIP Service - Port 443 ::..
@@ -120,13 +120,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: e-commerce-kic-443
-  namespace: e-commerce
+  name: nap-e-commerce-kic-443
+  namespace: nap-e-commerce
   labels:
     app: nginx-ingress
-    cis.f5.com/as3-tenant: e-commerce
-    cis.f5.com/as3-app: e-commerce-kic-443
-    cis.f5.com/as3-pool: e-commerce-kic-pool-443
+    cis.f5.com/as3-tenant: nap-e-commerce
+    cis.f5.com/as3-app: nap-e-commerce-kic-443
+    cis.f5.com/as3-pool: nap-e-commerce-kic-pool-443
 spec:
   type: ClusterIP
   ports:
@@ -135,7 +135,7 @@ spec:
     targetPort: 443
     protocol: TCP
   selector:
-    app: nginx-ingress-e-commerce
+    app: nginx-ingress-nap-e-commerce
 ---
 ## ----------------------------------------------------------------------------
 ## ..:: NGINX Plus ClusterIP Service - Port 8080 ::..
@@ -143,13 +143,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: e-commerce-kic-8080
-  namespace: e-commerce
+  name: nap-e-commerce-kic-8080
+  namespace: nap-e-commerce
   labels:
     app: nginx-ingress
-    cis.f5.com/as3-tenant: e-commerce
-    cis.f5.com/as3-app: e-commerce-kic-8080
-    cis.f5.com/as3-pool: e-commerce-kic-pool-8080
+    cis.f5.com/as3-tenant: nap-e-commerce
+    cis.f5.com/as3-app: nap-e-commerce-kic-8080
+    cis.f5.com/as3-pool: nap-e-commerce-kic-pool-8080
 spec:
   type: ClusterIP
   ports:
@@ -158,4 +158,4 @@ spec:
     targetPort: 8080
     protocol: TCP
   selector:
-    app: nginx-ingress-e-commerce
+    app: nginx-ingress-nap-e-commerce

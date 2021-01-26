@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hackazon
+  namespace: nap-e-commerce
+  labels:
+    app: hackazon
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hackazon
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: hackazon
+        version: v1
+    spec:
+      containers:
+      - env:
+        - name: service_name
+          value: hackazon
+        image:  mutzel/all-in-one-hackazon
+        imagePullPolicy: IfNotPresent
+        name: hackazon
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        volumeMounts:
+        - name: hackazon-persistent-storage
+          mountPath: /var/www/hackazon
+          subPath: nap-e-commerce/hackazon/hackazon
+      volumes:
+      - name: hackazon-persistent-storage
+        persistentVolumeClaim:
+          claimName: nap-e-commerce-pvc
