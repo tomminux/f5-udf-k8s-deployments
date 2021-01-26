@@ -26,7 +26,7 @@
     - name: Deploying NGINX Plus Ingress Controller PODs and Services
       become: true
       become_user: ubuntu
-      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/e-commerce/0.namespace-preparation/3.nplus-nap.yaml"
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/e-commerce/0.namespace-preparation/3.nplus.yaml"
 
     - name: Deploying BIG-IP Controller Config Map 
       become: true
