@@ -1,0 +1,19 @@
+## ----------------------------------------------------------------------------
+## ..:: Hackazon E-Commerce Deployment ::..
+## ----------------------------------------------------------------------------
+
+- hosts: infra-server
+  remote_user: root
+  tasks:
+
+    ## Configure and Deploy Services in "blog-apps" namespace
+
+    - name: Deploying Hackazon E-Commerce k8s POD
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/e-commerce/hackazon-nap/1.configmap-nginxconf.yaml"
+
+    - name: Deploying Hackazon E-Commerce k8s Services
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/e-commerce/hackazon-nap/2.hackazon-nap.yaml"

@@ -41,8 +41,8 @@ spec:
         volumeMounts:
         - name: nap-e-commerce-persistent-storage
           mountPath: /var/lib/mysql
-          subPath: e-commerce/hackazon/mysql
+          subPath: nap-e-commerce/hackazon/mysql
       volumes:
-      - name: e-commerce-persistent-storage
+      - name: nap-e-commerce-persistent-storage
         persistentVolumeClaim:
           claimName: nap-e-commerce-pvc
