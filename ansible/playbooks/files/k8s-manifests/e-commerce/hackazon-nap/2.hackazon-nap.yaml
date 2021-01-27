@@ -64,7 +64,7 @@ spec:
           name: nginx-waf
         - mountPath: /etc/nginx/conf.d
           readOnly: true
-          name: nginx-config
+          name: nginx-nap-config
         securityContext:
           allowPrivilegeEscalation: true
           capabilities:
@@ -80,9 +80,9 @@ spec:
       - name: hackazon-persistent-storage
         persistentVolumeClaim:
           claimName: e-commerce-pvc
-      - name: nginx-config
+      - name: nginx-nap-config
         configMap:
-          name: nginx-config
+          name: nginx-nap-config
       - name: nginx-waf
         configMap:
           name: nginx-waf
