@@ -6,14 +6,6 @@
   remote_user: root
   tasks:
 
-    ## k8s-manifests file
-    - name: Copy k8s-manifests files
-      copy:
-        src: k8s-manifests
-        dest: /home/ubuntu
-        owner: ubuntu
-        group: ubuntu
-
     ## Deploy Arcadia PODs
 
     - name: Deploying main application
