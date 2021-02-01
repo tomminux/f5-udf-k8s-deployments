@@ -298,7 +298,6 @@ spec:
   - name: http
     port: 80
     targetPort: 8080
-### --->>> ADD KIC VS HERE <<<---
 ---
 apiVersion: k8s.nginx.org/v1
 kind: VirtualServer

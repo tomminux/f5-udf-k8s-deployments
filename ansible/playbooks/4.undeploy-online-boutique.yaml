@@ -22,9 +22,3 @@
       become: true
       become_user: ubuntu
       command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/online-boutique/0.namespace-preparation/2.nginx-plus-common.yaml"
-
-    - name: Undeploying online-boutique namespace
-      become: true
-      become_user: ubuntu
-      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/online-boutique/0.namespace-preparation/0.namespace.yaml"
-

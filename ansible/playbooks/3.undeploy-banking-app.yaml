@@ -22,9 +22,3 @@
       become: true
       become_user: ubuntu
       command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/banking-apps/0.namespace-preparation/2.nginx-plus-common.yaml"
-
-    - name: undeploying banking-apps namespace
-      become: true
-      become_user: ubuntu
-      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/banking-apps/0.namespace-preparation/0.namespace.yaml"
-
