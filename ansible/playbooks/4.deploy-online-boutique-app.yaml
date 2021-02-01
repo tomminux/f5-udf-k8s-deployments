@@ -1,0 +1,15 @@
+## ----------------------------------------------------------------------------
+## ..:: Online-BOutique App Anisble playbook ::..
+## ----------------------------------------------------------------------------
+
+- hosts: infra-server
+  remote_user: root
+  tasks:
+
+    ## Deploy Online Boutique App PODs
+
+    - name: Deploying online-boutique namespace
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/online-boutique/online-boutique/kubernetes-manifests.yaml"
+

@@ -1,0 +1,30 @@
+## ----------------------------------------------------------------------------
+## ..:: Online-BOutique App Anisble playbook ::..
+## ----------------------------------------------------------------------------
+
+- hosts: infra-server
+  remote_user: root
+  tasks:
+
+    ## Deploy Online Boutique Namespace / NGINX+ KIC / F5 ConfigMap
+
+    - name: Deploying online-boutique namespace
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/online-boutique/0.namespace-preparation/0.namespace.yaml"
+
+    - name: Deploying online-boutique NGINX Plus Common Stuff
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/online-boutique/0.namespace-preparation/2.nginx-plus-common.yaml"
+
+    - name: Deploying online-boutique NGINX Plus Kubernetes Ingress Controller
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/online-boutique/0.namespace-preparation/3.nplus-nap.yaml"
+
+    - name: Deploying online-boutique k8s-bigip-ctlr configMap
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/online-boutique/0.namespace-preparation/4.bigip-ctlr-configMap.yaml"
+

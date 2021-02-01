@@ -1,0 +1,15 @@
+## ----------------------------------------------------------------------------
+## ..:: Online-BOutique App Anisble playbook ::..
+## ----------------------------------------------------------------------------
+
+- hosts: infra-server
+  remote_user: root
+  tasks:
+
+    ## Undeploy Online Boutique App PODs
+
+    - name: Undeploying online-boutique namespace
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/online-boutique/online-boutique/kubernetes-manifests.yaml"
+
