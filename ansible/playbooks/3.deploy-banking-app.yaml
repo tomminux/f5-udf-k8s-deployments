@@ -8,27 +8,23 @@
 
     ## Deploy Arcadia PODs
 
-    - name: Deploying main application 
+    - name: Deploying banking-apps namespace
       become: true
       become_user: ubuntu
-      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/banking-apps/arcadia/2.main.yaml"
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/banking-apps/0.namespace-preparation/0.namespace.yaml"
 
-    - name: Deploying backend application 
+    - name: Deploying banking-apps NGINX Plus Common Stuff
       become: true
       become_user: ubuntu
-      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/banking-apps/arcadia/3.backend.yaml"
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/banking-apps/0.namespace-preparation/2.nginx-plus-common.yaml"
 
-    - name: Deploying app2 application 
+    - name: Deploying banking-apps NGINX Plus Kubernetes Ingress Controller
       become: true
       become_user: ubuntu
-      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/banking-apps/arcadia/4.app2.yaml"
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/banking-apps/0.namespace-preparation/3.nplus-nap.yaml"
 
-    - name: Deploying app3 application 
+    - name: Deploying banking-apps k8s-bigip-ctlr configMap
       become: true
       become_user: ubuntu
-      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/banking-apps/arcadia/5.app3.yaml"
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/banking-apps/0.namespace-preparation/4.bigip-ctlr-configMap.yaml"
 
-    - name: Deploying arcadia VS for KIC
-      become: true
-      become_user: ubuntu
-      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/banking-apps/arcadia/6.arcadia-vs.yaml"
