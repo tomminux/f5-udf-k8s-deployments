@@ -17,3 +17,4 @@
       become: true
       become_user: ubuntu
       command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/e-commerce/hackazon-nap/1.configmap-nginxconf.yaml"
+      
