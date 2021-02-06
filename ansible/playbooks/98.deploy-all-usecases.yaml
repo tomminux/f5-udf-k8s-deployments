@@ -68,67 +68,6 @@
       become_user: ubuntu
       command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/e-commerce/hackazon-nap/2.hackazon-nap.yaml"
 
-    ## =================================================
-    ## E-Commerce Hackazon and Hackazon-nap Applications
-    ## =================================================
-
-    ## --->>> NAMESPACE
-    - name: Creating Namepsaces e-commerce
-      become: true
-      become_user: ubuntu
-      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/e-commerce/0.namespace-preparation/0.namespace.yaml"
-
-    - name: Deploying PV / PVC for persistent flie storage in e-commerce namespace
-      become: true
-      become_user: ubuntu
-      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/e-commerce/0.namespace-preparation/1.nfs-pv-pvc.yaml"
-
-    - name: Deploying Common NGINX Plus resources in e-commerce namespace
-      become: true
-      become_user: ubuntu
-      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/e-commerce/0.namespace-preparation/2.nginx-plus-common.yaml"
-
-    - name: Deploying NGINX Plus Ingress Controller PODs and Services in e-commerce namespace
-      become: true
-      become_user: ubuntu
-      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/e-commerce/0.namespace-preparation/3.nplus.yaml"
-
-    - name: Deploying BIG-IP Controller Config Map in e-commerce namespace
-      become: true
-      become_user: ubuntu
-      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/e-commerce/0.namespace-preparation/4.bigip-ctlr-configMap.yaml"
-
-    - name: Deploying MYSQL DB Server for e-commerce applications
-      become: true
-      become_user: ubuntu
-      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/e-commerce/0.namespace-preparation/5.mysql.yaml"
-
-    ## --->>> HACKAZON
-    - name: Deploying Hackazon E-Commerce k8s POD
-      become: true
-      become_user: ubuntu
-      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/e-commerce/hackazon/1.hackazon.yaml"
-
-    - name: Deploying Hackazon E-Commerce k8s Services
-      become: true
-      become_user: ubuntu
-      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/e-commerce/hackazon/2.hackazon-services.yaml"
-
-    - name: Deploying Hackazon E-Commerce NGINX Plus KIC Virtual Server
-      become: true
-      become_user: ubuntu
-      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/e-commerce/hackazon/3.hackazon-vs.yaml"
-
-    ## --->>> HACKAZON-NAP
-    - name: Deploying Hackazon-nap E-Commerce k8s POD
-      become: true
-      become_user: ubuntu
-      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/e-commerce/hackazon-nap/1.configmap-nginxconf.yaml"
-
-    - name: Deploying Hackazon-nap E-Commerce k8s Services
-      become: true
-      become_user: ubuntu
-      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl apply -f ~/k8s-manifests/e-commerce/hackazon-nap/2.hackazon-nap.yaml"
     ## =============================================================
     ## Blog Apps namespace and  wp-c1 / wp-c2 Wordpress Applications
     ## =============================================================

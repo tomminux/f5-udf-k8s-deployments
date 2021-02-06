@@ -1,0 +1,235 @@
+## ----------------------------------------------------------------------------
+## ..:: Ansible playbook to deploy ALL use cases ::..
+## ----------------------------------------------------------------------------
+
+- hosts: infra-server
+  remote_user: root
+  tasks:
+
+    ## =================================================
+    ## E-Commerce Hackazon and Hackazon-nap Applications
+    ## =================================================
+
+    ## --->>> Hackazon App
+    - name: Undeploying Hackazon E-Commerce k8s POD
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/e-commerce/hackazon/1.hackazon.yaml"
+
+    - name: Undeploying Hackazon E-Commerce k8s Services
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/e-commerce/hackazon/2.hackazon-services.yaml"
+
+    - name: Undeploying Hackazon E-Commerce NGINX Plus KIC Virtual Server
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/e-commerce/hackazon/3.hackazon-vs.yaml"     
+
+    - name: Undeploying Hackazon-nap E-Commerce k8s POD
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/e-commerce/hackazon-nap/2.hackazon-nap.yaml"
+
+    - name: Undeploying Hackazon E-Commerce k8s Services
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/e-commerce/hackazon-nap/1.configmap-nginxconf.yaml"
+
+    ## --->>> E Commerce services
+    - name: Undeploying MYSQL DB Server for e-commerce services
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/e-commerce/0.namespace-preparation/5.mysql.yaml"
+
+    - name: Undeploying BIG-IP Controller Config Map in e-commerce namespace
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/e-commerce/0.namespace-preparation/4.bigip-ctlr-configMap.yaml"
+
+    - name: Undeploying NGINX Plus Ingress Controller PODs and Services in e-commerce namespace
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/e-commerce/0.namespace-preparation/3.nplus.yaml"
+
+    - name: Undeploying Common NGINX Plus resources in e-commerce namespace
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/e-commerce/0.namespace-preparation/2.nginx-plus-common.yaml"
+
+    - name: Undeploying PV / PVC foro persistent flie storage in e-commerce namespace
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/e-commerce/0.namespace-preparation/1.nfs-pv-pvc.yaml"
+
+    ## =============================================================
+    ## Blog Apps namespace and  wp-c1 / wp-c2 Wordpress Applications
+    ## =============================================================
+
+    ## --->>> WP-C1 e WP-C2
+    - name: Undeploying Wordpress Customer 2
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/blog-apps/wordpress/wp-c2.yaml"
+
+    - name: Undeploying Wordpress Customer 1
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/blog-apps/wordpress/wp-c1.yaml"
+
+    ## --->>> Undeploying Blog Apps namespace service
+    - name: Undeploying MYSQL DB Server in blog-apps services
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/blog-apps/0.namespace-preparation/5.mysql.yaml"
+
+    - name: Undeploying BIG-IP Controller Config Map in blog-apps services
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/blog-apps/0.namespace-preparation/4.bigip-ctlr-configMap.yaml"
+
+    - name: Undeploying NGINX Plus Ingress Controller PODs and Services in blog-apps services
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/blog-apps/0.namespace-preparation/3.nplus-nap-blog-apps.yaml"
+
+    - name: Undeploying Common NGINX Plus resources in blog-apps services
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/blog-apps/0.namespace-preparation/2.nginx-blog-apps.yaml"
+
+    - name: Undeploying PV / PVC foro persistent file storage in blog-apps services
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/blog-apps/0.namespace-preparation/1.nfs-pv-pvc.yaml"
+
+    ## ================================================
+    ## Banking Apps namespace and  Arcadia Applications
+    ## ================================================
+
+    ## --->>> Undeploying the app
+    - name: Undeploying main Arcadia application
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/banking-apps/arcadia/2.main.yaml"
+
+    - name: Undeploying backend Arcadia application
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/banking-apps/arcadia/3.backend.yaml"
+
+    - name: Undeploying app2 Arcadia application
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/banking-apps/arcadia/4.app2.yaml"
+
+    - name: Undeploying app3 Arcadia application
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/banking-apps/arcadia/5.app3.yaml"
+
+    - name: Undeploying Arcadia VS for KIC
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/banking-apps/arcadia/6.arcadia-vs.yaml"
+
+    ## --->>> Undeploying Banking Apps namespace service
+    - name: undeploying banking-apps k8s-bigip-ctlr configMap
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/banking-apps/0.namespace-preparation/4.bigip-ctlr-configMap.yaml"
+
+    - name: undeploying banking-apps NGINX Plus Kubernetes Ingress Controller
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/banking-apps/0.namespace-preparation/3.nplus-nap.yaml"
+
+    - name: undeploying banking-apps NGINX Plus Common Stuff
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/banking-apps/0.namespace-preparation/2.nginx-plus-common.yaml"
+
+    ## ==================================
+    ## Google Online Boutique application
+    ## ==================================
+
+    ## --->>> undeploying the app
+    - name: Undeploying online-boutique application
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/online-boutique/online-boutique/kubernetes-manifests.yaml"
+
+
+    ## --->>> Undeploying Online Boutique namespace service
+    - name: Undeploying online-boutique k8s-bigip-ctlr configMap
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/online-boutique/0.namespace-preparation/4.bigip-ctlr-configMap.yaml"
+
+    - name: Undeploying online-boutique NGINX Plus Kubernetes Ingress Controller
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/online-boutique/0.namespace-preparation/3.nplus-nap.yaml"
+
+    - name: Undeploying online-boutique NGINX Plus Common Stuff
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/online-boutique/0.namespace-preparation/2.nginx-plus-common.yaml"
+
+    ## ========================================================================
+    ## NAP E-Commerce (NAP on NGINX Plus Kubernetes Ingress Controller Hackazon 
+    ## ========================================================================
+
+    ## --->>> Undeploying the hackazon app
+    - name: Undeploying Hackazon Ingress
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/nap-e-commerce/hackazon/3.hackazon-ingress.yaml"
+
+    - name: Undeploying Hackazon Service
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/nap-e-commerce/hackazon/2.hackazon-services.yaml"
+
+    - name: Undeploying Hackazon POD
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/nap-e-commerce/hackazon/1.hackazon.yaml"
+
+    ## --->>> Undeploying NAP E Commerce namespace service
+    - name: Undeploying MYSQL DB Server for nap-e-commerce services
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/nap-e-commerce/0.namespace-preparation/7.mysql.yaml"
+
+    - name: Undeploying BIG-IP Controller Config Map in nap-e-commerce namespace
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/nap-e-commerce/0.namespace-preparation/6.bigip-ctlr-configMap.yaml"
+
+    - name: Undeploying NGINX App Protect Log Config in nap-e-commerce namespace
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/nap-e-commerce/0.namespace-preparation/5.nap-log.yaml"
+
+    - name: Undeploying NGINX App Protect Policy in nap-e-commerce namespace
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/nap-e-commerce/0.namespace-preparation/4.1.nap-policy.yaml"
+
+    - name: Undeploying NGINX Plus Ingress Controller PODs and Services (NAP Enabled) in nap-e-commerce namespace
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/nap-e-commerce/0.namespace-preparation/3nap.nplus.yaml"
+
+    - name: Undeploying Common NGINX Plus resources in nap-e-commerce namespace
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/nap-e-commerce/0.namespace-preparation/2.nginx-plus-common.yaml"
+
+    - name: Undeploying PV / PVC foro persistent flie storage in nap-e-commerce namespace
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/nap-e-commerce/0.namespace-preparation/1.nfs-pv-pvc.yaml"
+
+
