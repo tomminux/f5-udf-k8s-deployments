@@ -249,12 +249,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: prometheus
+  name: prometheus-9090
   namespace: performance-monitoring
   labels:
     app: prometheus
     cis.f5.com/as3-tenant: performance-monitoring
-    cis.f5.com/as3-app: prometheus-9090
+    cis.f5.com/as3-app: prometheus-k8s
     cis.f5.com/as3-pool: prometheus-pool-9090
 spec:
   type: ClusterIP

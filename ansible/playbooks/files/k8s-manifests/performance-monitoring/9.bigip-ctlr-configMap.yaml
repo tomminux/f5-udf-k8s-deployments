@@ -15,21 +15,47 @@ data:
         "declaration": {
             "class": "ADC",
             "schemaVersion": "3.13.0",
-            "id": "urn:uuid:33045210-3ab8-4636-9b2a-c98d22ab915d",
+            "id": "prometheus-k8s",
             "label": "http",
-            "remark": "A1 Template",
+            "remark": "Prometheus in k9s - performance-monitoring",
             "performance-monitoring": {
                 "class": "Tenant",
-                "prometheus-9090": {
+                "prometheus-k8s": {
                     "class": "Application",
-                    "template": "generic",
                     "prometheus-9090-vs": {
+                        "remark": "prometheus-k8s",
                         "class": "Service_HTTP",
                         "remark": "prometheus-9090",
+                        "virtualPort": 80,
                         "virtualAddresses": [
                             "10.1.10.206"
                         ],
                         "pool": "prometheus-pool-9090"
+                    },
+                    "prometheus-443-vs": {
+                        "class": "Service_HTTPS",
+                        "remark": "prometheus-443",
+                        "serverTLS": "default_tls",
+                        "redirect80": false,
+                        "virtualPort": 443,
+                        "virtualAddresses": [
+                            "10.1.10.206"
+                        ],
+                        "pool": "prometheus-pool-9090"
+                    },
+                    "default_tls": {
+                        "class": "TLS_Server",
+                        "label": "Using ClientSSL BIG-IP Default Self-Signed Certificate",
+                        "certificates": [
+                          {
+                              "certificate": "default_tls_cert"
+                          }
+                        ]
+                    },
+                    "default_tls_cert": {
+                        "class": "Certificate",
+                        "certificate": {"bigip":"/Common/default.crt"},
+                        "privateKey": {"bigip":"/Common/default.key"}
                     },
                     "prometheus-pool-9090": {
                         "class": "Pool",
