@@ -1,0 +1,74 @@
+## ..:: NGINX ConfigMap for k8s-bigip-ctlr (AS3) ::..
+## ----------------------------------------------------------------------------
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: f5-to-k8s-istio-system
+  namespace: istio-system
+  labels:
+    f5type: virtual-server
+    as3: "true"
+data:
+  template: |
+    {
+        "class": "AS3",
+        "declaration": {
+            "class": "ADC",
+            "schemaVersion": "3.13.0",
+            "id": "f5-to-k8s-istio-system",
+            "label": "F5 VS to k8s AM Dashboard",
+            "remark": "A1 Template",
+            "istio-system": {
+                "class": "Tenant",
+                "am-dashboard": {
+                    "class": "Application",
+                    "template": "generic",
+                    "am-dashboard-19001-vs": {
+                        "class": "Service_HTTP",
+                        "remark": "aspen-mesh-dashboard",
+                        "virtualPort": 19001,
+                        "virtualAddresses": [
+                            "10.1.10.208"
+                        ],
+                        "pool": "am-dashboard-pool-19001"
+                    },
+                    "am-dashboard-443-vs": {
+                        "class": "Service_HTTPS",
+                        "remark": "aspen-mesh-dashboard-443",
+                        "virtualPort": 443,
+                        "serverTLS": "default_tls",
+                        "virtualAddresses": [
+                            "10.1.10.208"
+                        ],
+                        "pool": "am-dashboard-pool-19001"
+                    },
+                    "default_tls": {
+                        "class": "TLS_Server",
+                        "label": "Using ClientSSL BIG-IP Default Self-Signed Certificate",
+                        "certificates": [
+                          {
+                              "certificate": "default_tls_cert"
+                          }
+                        ]
+                    },
+                    "default_tls_cert": {
+                        "class": "Certificate",
+                        "certificate": {"bigip":"/Common/default.crt"},
+                        "privateKey": {"bigip":"/Common/default.key"}
+                    },
+                    "am-dashboard-pool-19001": {
+                        "class": "Pool",
+                        "monitors": [
+                            "http"
+                        ],
+                        "members": [
+                            {
+                                "servicePort": 19001,
+                                "serverAddresses": []
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: istio-system-pvc
+  namespace: istio-system
+spec:
+  storageClassName: infra-server-nfs-server-istio
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi

@@ -1,0 +1,32 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  labels:
+    app: test-nfs-website
+  namespace: istio-system
+  name: test-nfs-nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-nfs-website
+  template:
+    metadata:
+      labels:
+        app: test-nfs-website
+    spec:
+      volumes:
+        - name: nfs-storage-class-volume
+          persistentVolumeClaim:
+            claimName: istio-system-pvc
+      containers:
+        - image: nginx
+          name: test-nfs-website
+          resources:
+            limits:
+              cpu: '1'
+              memory: 100Mi
+          volumeMounts:
+            - name: nfs-storage-class-volume
+              mountPath: /usr/share/nginx/html
+              subPath: nginx-test
