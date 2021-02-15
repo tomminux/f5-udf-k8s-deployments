@@ -46,9 +46,9 @@ data:
                         "class": "TLS_Server",
                         "label": "Using ClientSSL BIG-IP Default Self-Signed Certificate",
                         "certificates": [
-                          {
-                              "certificate": "default_tls_cert"
-                          }
+                        {
+                            "certificate": "default_tls_cert"
+                        }
                         ]
                     },
                     "default_tls_cert": {
@@ -64,6 +64,52 @@ data:
                         "members": [
                             {
                                 "servicePort": 19001,
+                                "serverAddresses": []
+                            }
+                        ]
+                    }
+                },
+                "am-ingress": {
+                    "class": "Application",
+                    "template": "generic",
+                    "am-ingress-80-vs": {
+                        "class": "Service_HTTP",
+                        "remark": "aspen-mesh-ingress-80",
+                        "virtualPort": 80,
+                        "virtualAddresses": [
+                            "10.1.10.106"
+                        ],
+                        "pool": "am-ingress-pool-80"
+                    },
+                    "am-ingress-pool-80": {
+                        "class": "Pool",
+                        "monitors": [
+                            "http"
+                        ],
+                        "members": [
+                            {
+                                "servicePort": 8080,
+                                "serverAddresses": []
+                            }
+                        ]
+                    },
+                    "am-ingress-443-vs": {
+                        "class": "Service_TCP",
+                        "remark": "aspen-mesh-ingress-443",
+                        "virtualPort": 443,
+                        "virtualAddresses": [
+                            "10.1.10.106"
+                        ],
+                        "pool": "am-ingress-pool-443"
+                    },
+                    "am-ingress-pool-443": {
+                        "class": "Pool",
+                        "monitors": [
+                            "tcp"
+                        ],
+                        "members": [
+                            {
+                                "servicePort": 8443,
                                 "serverAddresses": []
                             }
                         ]
