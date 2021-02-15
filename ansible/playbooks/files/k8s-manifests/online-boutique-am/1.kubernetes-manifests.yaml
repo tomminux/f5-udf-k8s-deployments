@@ -19,7 +19,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: emailservice
-  namespace: online-boutique
+  namespace: online-boutique-am
 spec:
   selector:
     matchLabels:
@@ -63,7 +63,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: emailservice
-  namespace: online-boutique
+  namespace: online-boutique-am
 spec:
   type: ClusterIP
   selector:
@@ -80,7 +80,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: checkoutservice
-  namespace: online-boutique
+  namespace: online-boutique-am
 spec:
   selector:
     matchLabels:
@@ -137,7 +137,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: checkoutservice
-  namespace: online-boutique
+  namespace: online-boutique-am
 spec:
   type: ClusterIP
   selector:
@@ -154,7 +154,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: recommendationservice
-  namespace: online-boutique
+  namespace: online-boutique-am
 spec:
   selector:
     matchLabels:
@@ -201,7 +201,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: recommendationservice
-  namespace: online-boutique
+  namespace: online-boutique-am
 spec:
   type: ClusterIP
   selector:
@@ -218,7 +218,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
-  namespace: online-boutique
+  namespace: online-boutique-am
 spec:
   selector:
     matchLabels:
@@ -289,7 +289,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: frontend
-  namespace: online-boutique
+  namespace: online-boutique-am
 spec:
   type: ClusterIP
   selector:
@@ -298,28 +298,28 @@ spec:
   - name: http
     port: 80
     targetPort: 8080
----
-apiVersion: k8s.nginx.org/v1
-kind: VirtualServer
-metadata:
-  name: online-boutique-vs
-  namespace: online-boutique
-spec:
-  host: online-boutique.f5-udf.com
-  upstreams:
-  - name: online-boutique-frontend
-    service: frontend
-    port: 80
-  routes:
-  - path: /
-    action:
-      pass: online-boutique-frontend
+#---
+#apiVersion: k8s.nginx.org/v1
+#kind: VirtualServer
+#metadata:
+#  name: online-boutique-vs
+#  namespace: online-boutique-am
+#spec:
+#  host: online-boutique.f5-udf.com
+#  upstreams:
+#  - name: online-boutique-frontend
+#    service: frontend
+#    port: 80
+#  routes:
+#  - path: /
+#    action:
+#      pass: online-boutique-frontend
 #---
 #apiVersion: v1
 #kind: Service
 #metadata:
 #  name: frontend-external
-#  namespace: online-boutique
+#  namespace: online-boutique-am
 #spec:
 #  type: LoadBalancer
 #  selector:
@@ -336,7 +336,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: paymentservice
-  namespace: online-boutique
+  namespace: online-boutique-am
 spec:
   selector:
     matchLabels:
@@ -374,7 +374,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: paymentservice
-  namespace: online-boutique
+  namespace: online-boutique-am
 spec:
   type: ClusterIP
   selector:
@@ -391,7 +391,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: productcatalogservice
-  namespace: online-boutique
+  namespace: online-boutique-am
 spec:
   selector:
     matchLabels:
@@ -437,7 +437,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: productcatalogservice
-  namespace: online-boutique
+  namespace: online-boutique-am
 spec:
   type: ClusterIP
   selector:
@@ -454,7 +454,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cartservice
-  namespace: online-boutique
+  namespace: online-boutique-am
 spec:
   selector:
     matchLabels:
@@ -499,7 +499,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: cartservice
-  namespace: online-boutique
+  namespace: online-boutique-am
 spec:
   type: ClusterIP
   selector:
@@ -516,7 +516,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: loadgenerator
-  namespace: online-boutique
+  namespace: online-boutique-am
 spec:
   selector:
     matchLabels:
@@ -555,7 +555,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: currencyservice
-  namespace: online-boutique
+  namespace: online-boutique-am
 spec:
   selector:
     matchLabels:
@@ -600,7 +600,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: currencyservice
-  namespace: online-boutique
+  namespace: online-boutique-am
 spec:
   type: ClusterIP
   selector:
@@ -617,7 +617,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: shippingservice
-  namespace: online-boutique
+  namespace: online-boutique-am
 spec:
   selector:
     matchLabels:
@@ -662,7 +662,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: shippingservice
-  namespace: online-boutique
+  namespace: online-boutique-am
 spec:
   type: ClusterIP
   selector:
@@ -679,7 +679,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: redis-cart
-  namespace: online-boutique
+  namespace: online-boutique-am
 spec:
   selector:
     matchLabels:
@@ -721,7 +721,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: redis-cart
-  namespace: online-boutique
+  namespace: online-boutique-am
 spec:
   type: ClusterIP
   selector:
@@ -738,7 +738,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: adservice
-  namespace: online-boutique
+  namespace: online-boutique-am
 spec:
   selector:
     matchLabels:
@@ -786,7 +786,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: adservice
-  namespace: online-boutique
+  namespace: online-boutique-am
 spec:
   type: ClusterIP
   selector:
