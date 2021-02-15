@@ -11,15 +11,15 @@
     - name: Uneploying Online Boutique Istio Ingress Config
       become: true
       become_user: ubuntu
-      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/online-boutique/2.frontend-gateway.yaml"
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/online-boutique-am/2.frontend-gateway.yaml"
 
     - name: Uneploying Online Boutique Application
       become: true
       become_user: ubuntu
-      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/online-boutique/1.kubernetes-manifests.yaml"
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/online-boutique-am/1.kubernetes-manifests.yaml"
 
     - name: Uneploying online-boutique-am namespace
       become: true
       become_user: ubuntu
-      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/online-boutique/0.namespace.yaml"
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/online-boutique-am/0.namespace.yaml"
 
