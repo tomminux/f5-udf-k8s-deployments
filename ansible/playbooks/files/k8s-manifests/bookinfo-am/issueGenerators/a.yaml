@@ -1,0 +1,21 @@
+##################################################################################################
+# Ratings Slow-Down Rule
+##################################################################################################
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: payment
+  namespace: online-boutique-am
+spec:
+  hosts:
+    - paymentservice.online-boutique-am.svc.cluster.local
+  http:
+    - fault:
+        abort:
+          percentage:
+            value: 100
+          httpStatus: 500
+      route:
+        - destination:
+            host: paymentservice.online-boutique-am.svc.cluster.local
+---

@@ -1,0 +1,38 @@
+---
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: ratings
+  namespace: bookinfo
+spec:
+  selector:
+    matchLabels:
+      app: ratings
+  mtls:
+    mode: PERMISSIVE
+#---
+#apiVersion: authentication.istio.io/v1alpha1
+#kind: Policy
+#metadata:
+#  name: ratings
+#  namespace: bookinfo
+#spec:
+#  targets:
+#    - name: ratings
+#      ports:
+#        - number: 9080
+#  peers:
+#    - mtls:
+#        mode: PERMISSIVE
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: ratings
+  namespace: bookinfo
+spec:
+  host: "ratings.bookino.svc.cluster.local"
+  trafficPolicy:
+    tls:
+      mode: DISABLE
+---

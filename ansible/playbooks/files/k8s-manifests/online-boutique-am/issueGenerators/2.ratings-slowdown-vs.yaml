@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: cartservice
+  namespace: online-boutique-am
+spec:
+  hosts:
+    - cartservice.online-boutique-am.svc.cluster.local
+  http:
+    - fault:
+        abort:
+          percentage:
+            value: 100
+          httpStatus: 500
+      route:
+        - destination:
+            host: cartservice.online-boutique-am.svc.cluster.local
+
