@@ -1,0 +1,24 @@
+---
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: cartservice
+  namespace: online-boutique-am
+spec:
+  selector:
+    matchLabels:
+      app: cartservice
+  mtls:
+    mode: PERMISSIVE
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: cartservice
+  namespace: online-boutique-am
+spec:
+  host: "cartservice.online-boutique-am.svc.cluster.local"
+  trafficPolicy:
+    tls:
+      mode: DISABLE
+---
