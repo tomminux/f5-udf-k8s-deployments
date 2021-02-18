@@ -114,6 +114,46 @@ data:
                             }
                         ]
                     }
+                },
+                "am-grafana": {
+                    "class": "Application",
+                    "template": "generic",
+                    "am-grafana-443-vs": {
+                        "class": "Service_HTTPS",
+                        "remark": "aspen-mesh-grafana-443",
+                        "virtualPort": 443,
+                        "serverTLS": "default_tls",
+                        "virtualAddresses": [
+                            "10.1.10.210"
+                        ],
+                        "pool": "am-grafana-pool-3000"
+                    },
+                    "default_tls": {
+                        "class": "TLS_Server",
+                        "label": "Using ClientSSL BIG-IP Default Self-Signed Certificate",
+                        "certificates": [
+                        {
+                            "certificate": "default_tls_cert"
+                        }
+                        ]
+                    },
+                    "default_tls_cert": {
+                        "class": "Certificate",
+                        "certificate": {"bigip":"/Common/default.crt"},
+                        "privateKey": {"bigip":"/Common/default.key"}
+                    },
+                    "am-grafana-pool-3000": {
+                        "class": "Pool",
+                        "monitors": [
+                            "http"
+                        ],
+                        "members": [
+                            {
+                                "servicePort": 3000,
+                                "serverAddresses": []
+                            }
+                        ]
+                    }
                 }
             }
         }
