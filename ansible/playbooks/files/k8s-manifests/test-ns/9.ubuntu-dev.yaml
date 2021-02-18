@@ -10,7 +10,7 @@ spec:
   type: NodePort
   ports:
   - port: 22
-    hostPort: 22222
+    nodePort: 30022
   selector:
     app: ubuntu-dev
 ---
