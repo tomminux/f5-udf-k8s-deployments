@@ -7,8 +7,10 @@ metadata:
   name: ubuntu-dev
   namespace: test-ns
 spec:
+  type: NodePort
   ports:
   - port: 22
+    hostPort: 22222
   selector:
     app: ubuntu-dev
 ---
@@ -29,7 +31,7 @@ spec:
         app: ubuntu-dev
     spec:
       containers:
-      - image: registry.k8s.x-wide.cloud:5000/ubuntu-dev:latest
+      - image: registry.f5-udf.com:5000/ubuntu-dev:latest
         name: ubuntu-dev
         ports:
         - containerPort: 22
@@ -41,4 +43,4 @@ spec:
       volumes:
       - name: ubuntu-dev-persistent-storage
         persistentVolumeClaim:
-          claimName: test-ns-nfs-pvc
+          claimName: test-ns-pvc
