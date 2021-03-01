@@ -78,7 +78,7 @@ metadata:
   labels:
     app: nginx-ingress-e-commerce
     cis.f5.com/as3-tenant: e-commerce
-    cis.f5.com/as3-app: e-commerce-kic-80
+    cis.f5.com/as3-app: e-commerce
     cis.f5.com/as3-pool: e-commerce-kic-pool-80
 spec:
   type: ClusterIP
@@ -101,7 +101,7 @@ metadata:
   labels:
     app: nginx-ingress
     cis.f5.com/as3-tenant: e-commerce
-    cis.f5.com/as3-app: e-commerce-kic-443
+    cis.f5.com/as3-app: e-commerce
     cis.f5.com/as3-pool: e-commerce-kic-pool-443
 spec:
   type: ClusterIP
@@ -124,7 +124,7 @@ metadata:
   labels:
     app: nginx-ingress
     cis.f5.com/as3-tenant: e-commerce
-    cis.f5.com/as3-app: e-commerce-kic-8080
+    cis.f5.com/as3-app: e-commerce
     cis.f5.com/as3-pool: e-commerce-kic-pool-8080
 spec:
   type: ClusterIP
