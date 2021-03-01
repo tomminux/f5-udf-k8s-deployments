@@ -93,31 +93,6 @@ data:
                             }
                         ]
                     }
-                },
-                "e-commerce-kic-9113": {
-                    "class": "Application",
-                    "template": "generic",
-                    "e-commerce-kic-9113-vs": {
-                        "class": "Service_TCP",
-                        "remark": "e-commerce-kic-9113",
-                        "virtualAddresses": [
-                            "10.1.10.101"
-                        ],
-                        "virtualPort": 9113,
-                        "pool": "e-commerce-kic-pool-9113"
-                    },
-                    "e-commerce-kic-pool-9113": {
-                        "class": "Pool",
-                        "monitors": [
-                            "tcp"
-                        ],
-                        "members": [
-                            {
-                                "servicePort": 9113,
-                                "serverAddresses": []
-                            }
-                        ]
-                    }
                 }
             }
         }

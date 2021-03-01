@@ -91,29 +91,6 @@ spec:
     app: nginx-ingress-e-commerce
 ---
 ## ----------------------------------------------------------------------------
-## ..:: NGINX Plus ClusterIP Service - Port 80 ::..
-## ----------------------------------------------------------------------------
-apiVersion: v1
-kind: Service
-metadata:
-  name: e-commerce-kic-9113
-  namespace: e-commerce
-  labels:
-    app: nginx-ingress-e-commerce
-    cis.f5.com/as3-tenant: e-commerce
-    cis.f5.com/as3-app: e-commerce-kic-9113
-    cis.f5.com/as3-pool: e-commerce-kic-pool-9113
-spec:
-  type: ClusterIP
-  ports:
-  - name: prometheus-9113
-    port: 9113
-    targetPort: 9113
-    protocol: TCP
-  selector:
-    app: nginx-ingress-e-commerce
----
-## ----------------------------------------------------------------------------
 ## ..:: NGINX Plus ClusterIP Service - Port 443 ::..
 ## ----------------------------------------------------------------------------
 apiVersion: v1

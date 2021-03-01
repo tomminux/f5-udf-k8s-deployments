@@ -20,7 +20,7 @@ data:
             "remark": "A1 Template",
             "blog-apps": {
                 "class": "Tenant",
-                "blog-apps-kic-80": {
+                "blog-apps": {
                     "class": "Application",
                     "template": "generic",
                     "blog-apps-kic-80-vs": {
@@ -42,11 +42,7 @@ data:
                                 "serverAddresses": []
                             }
                         ]
-                    }
-                },
-                "blog-apps-kic-8080": {
-                    "class": "Application",
-                    "template": "generic",
+                    },
                     "blog-apps-kic-8080-vs": {
                         "class": "Service_HTTP",
                         "remark": "blog-apps-kic-8080",
@@ -67,11 +63,7 @@ data:
                                 "serverAddresses": []
                             }
                         ]
-                    }
-                },
-                "blog-apps-kic-443": {
-                    "class": "Application",
-                    "template": "generic",
+                    },
                     "blog-apps-kic-443-vs": {
                         "class": "Service_TCP",
                         "remark": "blog-apps-kic-443",
@@ -89,31 +81,6 @@ data:
                         "members": [
                             {
                                 "servicePort": 443,
-                                "serverAddresses": []
-                            }
-                        ]
-                    }
-                },
-                "blog-apps-kic-9113": {
-                    "class": "Application",
-                    "template": "generic",
-                    "blog-apps-kic-9113-vs": {
-                        "class": "Service_TCP",
-                        "remark": "blog-apps-kic-9113",
-                        "virtualAddresses": [
-                            "10.1.10.102"
-                        ],
-                        "virtualPort": 9113,
-                        "pool": "blog-apps-kic-pool-9113"
-                    },
-                    "blog-apps-kic-pool-9113": {
-                        "class": "Pool",
-                        "monitors": [
-                            "tcp"
-                        ],
-                        "members": [
-                            {
-                                "servicePort": 9113,
                                 "serverAddresses": []
                             }
                         ]
