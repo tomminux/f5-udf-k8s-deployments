@@ -4,29 +4,29 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql-hackazon
+  name: mysql
   namespace: e-commerce
 spec:
   ports:
   - port: 3306
   selector:
-    app: mysql-hackazon
+    app: mysql
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql-hackazon
+  name: mysql
   namespace: e-commerce
 spec:
   selector:
     matchLabels:
-      app: mysql-hackazon
+      app: mysql
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: mysql-hackazon
+        app: mysql
     spec:
       containers:
       - image: mysql:5.6
@@ -37,11 +37,11 @@ spec:
           value: Default1234!
         ports:
         - containerPort: 3306
-          name: mysql-hackazon
+          name: mysql
         volumeMounts:
         - name: e-commerce-persistent-storage
           mountPath: /var/lib/mysql
-          subPath: e-commerce/hackazon/mysql
+          subPath: e-commerce/mysql
       volumes:
       - name: e-commerce-persistent-storage
         persistentVolumeClaim:
