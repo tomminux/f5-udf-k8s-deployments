@@ -21,7 +21,7 @@ spec:
     spec:
       serviceAccountName: nginx-ingress
       containers:
-      - image: registry.f5-udf.com:5000/nginx-plus-ingress:1.9.1
+      - image: registry.f5-udf.com:5000/nginx-plus-ingress:1.10.0
         imagePullPolicy: Always
         name: nginx-plus-ingress
         ports:
