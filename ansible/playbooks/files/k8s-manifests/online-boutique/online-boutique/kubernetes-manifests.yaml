@@ -329,7 +329,7 @@ spec:
 #    port: 80
 #    targetPort: 8080
 ## ----------------------------------------------------------------------------
-## ..:: fronpaymentservicetend POD Deployment and Service Configuration ::..
+## ..:: paymnetservice POD Deployment and Service Configuration ::..
 ## ----------------------------------------------------------------------------
 ---
 apiVersion: apps/v1
