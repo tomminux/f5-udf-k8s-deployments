@@ -6,6 +6,8 @@ FROM ubuntu:focal
 COPY nginx-repo.crt nginx-repo.key /etc/ssl/nginx/
 
 # Install prerequisite packages:
+ENV TZ=Europe/Rome
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get update && apt-get install -y apt-transport-https lsb-release ca-certificates wget gnupg2
 
 # Download and add the NGINX signing key:
@@ -28,7 +30,7 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 
 # Copy configuration files:
-COPY nginx.conf custom_log_format.json /etc/nginx/
+COPY nginx.conf log-default.json /etc/nginx/
 COPY entrypoint.sh  /root/
 
 CMD ["sh", "/root/entrypoint.sh"]
