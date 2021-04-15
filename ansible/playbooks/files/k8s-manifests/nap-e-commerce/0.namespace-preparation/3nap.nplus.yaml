@@ -79,7 +79,7 @@ metadata:
   labels:
     app: nginx-ingress-nap-e-commerce
     cis.f5.com/as3-tenant: nap-e-commerce
-    cis.f5.com/as3-app: nap-e-commerce-kic-80
+    cis.f5.com/as3-app: nap-e-commerce
     cis.f5.com/as3-pool: nap-e-commerce-kic-pool-80
 spec:
   type: ClusterIP
@@ -87,29 +87,6 @@ spec:
   - name: http
     port: 80
     targetPort: 80
-    protocol: TCP
-  selector:
-    app: nginx-ingress-nap-e-commerce
----
-## ----------------------------------------------------------------------------
-## ..:: NGINX Plus ClusterIP Service - Port 80 ::..
-## ----------------------------------------------------------------------------
-apiVersion: v1
-kind: Service
-metadata:
-  name: nap-e-commerce-kic-9113
-  namespace: nap-e-commerce
-  labels:
-    app: nginx-ingress-nap-e-commerce
-    cis.f5.com/as3-tenant: nap-e-commerce
-    cis.f5.com/as3-app: nap-e-commerce-kic-9113
-    cis.f5.com/as3-pool: nap-e-commerce-kic-pool-9113
-spec:
-  type: ClusterIP
-  ports:
-  - name: prometheus-9113
-    port: 9113
-    targetPort: 9113
     protocol: TCP
   selector:
     app: nginx-ingress-nap-e-commerce
@@ -125,7 +102,7 @@ metadata:
   labels:
     app: nginx-ingress
     cis.f5.com/as3-tenant: nap-e-commerce
-    cis.f5.com/as3-app: nap-e-commerce-kic-443
+    cis.f5.com/as3-app: nap-e-commerce
     cis.f5.com/as3-pool: nap-e-commerce-kic-pool-443
 spec:
   type: ClusterIP
@@ -148,7 +125,7 @@ metadata:
   labels:
     app: nginx-ingress
     cis.f5.com/as3-tenant: nap-e-commerce
-    cis.f5.com/as3-app: nap-e-commerce-kic-8080
+    cis.f5.com/as3-app: nap-e-commerce
     cis.f5.com/as3-pool: nap-e-commerce-kic-pool-8080
 spec:
   type: ClusterIP

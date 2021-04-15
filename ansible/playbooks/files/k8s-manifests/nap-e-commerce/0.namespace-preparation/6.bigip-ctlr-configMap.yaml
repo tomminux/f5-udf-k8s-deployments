@@ -20,7 +20,7 @@ data:
             "remark": "A1 Template",
             "nap-e-commerce": {
                 "class": "Tenant",
-                "nap-e-commerce-kic-80": {
+                "nap-e-commerce": {
                     "class": "Application",
                     "template": "generic",
                     "nap-e-commerce-kic-80-vs": {
@@ -42,11 +42,7 @@ data:
                                 "serverAddresses": []
                             }
                         ]
-                    }
-                },
-                "nap-e-commerce-kic-8080": {
-                    "class": "Application",
-                    "template": "generic",
+                    },
                     "nap-e-commerce-kic-8080-vs": {
                         "class": "Service_HTTP",
                         "remark": "nap-e-commerce-kic-8080",
@@ -67,11 +63,7 @@ data:
                                 "serverAddresses": []
                             }
                         ]
-                    }
-                },
-                "nap-e-commerce-kic-443": {
-                    "class": "Application",
-                    "template": "generic",
+                    },
                     "nap-e-commerce-kic-443-vs": {
                         "class": "Service_TCP",
                         "remark": "nap-e-commerce-kic-443",
