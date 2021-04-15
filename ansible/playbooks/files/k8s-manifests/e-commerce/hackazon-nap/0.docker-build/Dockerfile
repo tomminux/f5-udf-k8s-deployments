@@ -1,34 +1,34 @@
-#For CentOS 7
-FROM centos:7.4.1708
+# For Ubuntu 20.04:
+FROM ubuntu:focal
 
-# Download certificate and key from the customer portal (https://cs.nginx.com)
-# and copy to the build context
+# Download certificate and key from the customer portal (https://my.f5.com)
+# and copy to the build context:
 COPY nginx-repo.crt nginx-repo.key /etc/ssl/nginx/
 
-# Install prerequisite packages
-RUN yum -y install wget ca-certificates epel-release
+# Install prerequisite packages:
+RUN apt-get update && apt-get install -y apt-transport-https lsb-release ca-certificates wget gnupg2
 
-# Add NGINX Plus repo to yum
-RUN wget -P /etc/yum.repos.d https://cs.nginx.com/static/files/nginx-plus-7.repo
+# Download and add the NGINX signing key:
+RUN wget https://cs.nginx.com/static/keys/nginx_signing.key && apt-key add nginx_signing.key
 
-# Install NGINX App Protect
-RUN yum -y install app-protect
+# Add NGINX Plus repository:
+RUN printf "deb https://plus-pkgs.nginx.com/ubuntu `lsb_release -cs` nginx-plus\n" | tee /etc/apt/sources.list.d/nginx-plus.list
 
-#RUN wget -P /etc/yum.repos.d https://cs.nginx.com/static/files/app-protect-signatures-7.repo
-#RUN yum -y install app-protect-attack-signatures
+# Download the apt configuration to `/etc/apt/apt.conf.d`:
+RUN wget -P /etc/apt/apt.conf.d https://cs.nginx.com/static/files/90nginx
 
-RUN yum clean all \
-    && rm -rf /var/cache/yum
-    #&& rm -rf /etc/ssl/nginx
+# Update the repository and install the most recent version of the NGINX App Protect package (which includes NGINX Plus):
+RUN apt-get update && apt-get install -y app-protect
 
-# Forward request logs to Docker log collector
+# Remove nginx repository key/cert from docker
+RUN rm -rf /etc/ssl/nginx
+
+# Forward request logs to Docker log collector:
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
-    
 
-# Copy configuration files  
-COPY nginx.conf log-default.json /etc/nginx/
-#COPY log-default.json /etc/nginx/
-COPY entrypoint.sh  ./
+# Copy configuration files:
+COPY nginx.conf custom_log_format.json /etc/nginx/
+COPY entrypoint.sh  /root/
 
-CMD ["sh", "/entrypoint.sh"] 
+CMD ["sh", "/root/entrypoint.sh"]
