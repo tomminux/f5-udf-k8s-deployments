@@ -4,17 +4,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-ingress-online-boutique
+  name: nginx-ingress-nap-online-boutique
   namespace: nap-online-boutique
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx-ingress-online-boutique
+      app: nginx-ingress-nap-online-boutique
   template:
     metadata:
       labels:
-        app: nginx-ingress-online-boutique
+        app: nginx-ingress-nap-online-boutique
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "9113"
@@ -59,7 +59,7 @@ spec:
           - -nginx-plus
           - -nginx-configmaps=$(POD_NAMESPACE)/nginx-config
           - -default-server-tls-secret=$(POD_NAMESPACE)/default-server-secret
-          - -watch-namespace=online-boutique
+          - -watch-namespace=nap-online-boutique
           - -v=3 # Enables extensive logging. Useful for troubleshooting.
           - -report-ingress-status
           - -nginx-status-allow-cidrs=10.0.0.0/8
@@ -73,13 +73,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: online-boutique-kic-80
+  name: nap-online-boutique-kic-80
   namespace: nap-online-boutique
   labels:
-    app: nginx-ingress-online-boutique
-    cis.f5.com/as3-tenant: online-boutique
-    cis.f5.com/as3-app: online-boutique-kic
-    cis.f5.com/as3-pool: online-boutique-kic-pool-80
+    app: nginx-ingress-nap-online-boutique
+    cis.f5.com/as3-tenant: nap-online-boutique
+    cis.f5.com/as3-app: nap-online-boutique-kic
+    cis.f5.com/as3-pool: nap-online-boutique-kic-pool-80
 spec:
   type: ClusterIP
   ports:
@@ -88,7 +88,7 @@ spec:
     targetPort: 80
     protocol: TCP
   selector:
-    app: nginx-ingress-online-boutique
+    app: nginx-ingress-nap-online-boutique
 ---
 ## ----------------------------------------------------------------------------
 ## ..:: NGINX Plus ClusterIP Service - Port 443 ::..
@@ -96,13 +96,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: online-boutique-kic-443
+  name: nap-online-boutique-kic-443
   namespace: nap-online-boutique
   labels:
     app: nginx-ingress
-    cis.f5.com/as3-tenant: online-boutique
-    cis.f5.com/as3-app: online-boutique-kic
-    cis.f5.com/as3-pool: online-boutique-kic-pool-443
+    cis.f5.com/as3-tenant: nap-online-boutique
+    cis.f5.com/as3-app: nap-online-boutique-kic
+    cis.f5.com/as3-pool: nap-online-boutique-kic-pool-443
 spec:
   type: ClusterIP
   ports:
@@ -111,7 +111,7 @@ spec:
     targetPort: 443
     protocol: TCP
   selector:
-    app: nginx-ingress-online-boutique
+    app: nginx-ingress-nap-online-boutique
 ---
 ## ----------------------------------------------------------------------------
 ## ..:: NGINX Plus ClusterIP Service - Port 8080 ::..
@@ -119,13 +119,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: online-boutique-kic-8080
+  name: nap-online-boutique-kic-8080
   namespace: nap-online-boutique
   labels:
     app: nginx-ingress
-    cis.f5.com/as3-tenant: online-boutique
-    cis.f5.com/as3-app: online-boutique-kic
-    cis.f5.com/as3-pool: online-boutique-kic-pool-8080
+    cis.f5.com/as3-tenant: nap-online-boutique
+    cis.f5.com/as3-app: nap-online-boutique-kic
+    cis.f5.com/as3-pool: nap-online-boutique-kic-pool-8080
 spec:
   type: ClusterIP
   ports:
@@ -134,4 +134,4 @@ spec:
     targetPort: 8080
     protocol: TCP
   selector:
-    app: nginx-ingress-online-boutique
+    app: nginx-ingress-nap-online-boutique
