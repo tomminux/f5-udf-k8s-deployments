@@ -5,7 +5,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-ingress-online-boutique
-  namespace: online-boutique
+  namespace: nap-online-boutique
 spec:
   replicas: 1
   selector:
@@ -74,7 +74,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: online-boutique-kic-80
-  namespace: online-boutique
+  namespace: nap-online-boutique
   labels:
     app: nginx-ingress-online-boutique
     cis.f5.com/as3-tenant: online-boutique
@@ -97,7 +97,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: online-boutique-kic-443
-  namespace: online-boutique
+  namespace: nap-online-boutique
   labels:
     app: nginx-ingress
     cis.f5.com/as3-tenant: online-boutique
@@ -120,7 +120,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: online-boutique-kic-8080
-  namespace: online-boutique
+  namespace: nap-online-boutique
   labels:
     app: nginx-ingress
     cis.f5.com/as3-tenant: online-boutique

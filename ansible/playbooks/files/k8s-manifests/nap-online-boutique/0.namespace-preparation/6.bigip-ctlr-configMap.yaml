@@ -18,20 +18,20 @@ data:
             "id": "urn:uuid:33045210-3ab8-4636-9b2a-c98d22ab915d",
             "label": "http",
             "remark": "A1 Template",
-            "nap-online-boutique": {
+            "online-boutique": {
                 "class": "Tenant",
-                "nap-online-boutique-kic": {
+                "online-boutique-kic": {
                     "class": "Application",
                     "template": "generic",
-                    "nap-online-boutique-kic-80-vs": {
+                    "online-boutique-kic-80-vs": {
                         "class": "Service_HTTP",
-                        "remark": "nap-online-boutique-kic-80",
+                        "remark": "online-boutique-kic-80",
                         "virtualAddresses": [
                             "10.1.10.107"
                         ],
-                        "pool": "nap-online-boutique-kic-pool-80"
+                        "pool": "online-boutique-kic-pool-80"
                     },
-                    "nap-online-boutique-kic-pool-80": {
+                    "online-boutique-kic-pool-80": {
                         "class": "Pool",
                         "monitors": [
                             "tcp"
@@ -43,16 +43,16 @@ data:
                             }
                         ]
                     },
-                    "nap-online-boutique-kic-8080-vs": {
+                    "online-boutique-kic-8080-vs": {
                         "class": "Service_HTTP",
-                        "remark": "nap-online-boutique-kic-8080",
+                        "remark": "online-boutique-kic-8080",
                         "virtualPort": 8080,
                         "virtualAddresses": [
                             "10.1.10.107"
                         ],
-                        "pool": "nap-online-boutique-kic-pool-8080"
+                        "pool": "online-boutique-kic-pool-8080"
                     },
-                    "nap-online-boutique-kic-pool-8080": {
+                    "online-boutique-kic-pool-8080": {
                         "class": "Pool",
                         "monitors": [
                             "http"
@@ -64,16 +64,16 @@ data:
                             }
                         ]
                     },
-                    "nap-online-boutique-kic-443-vs": {
+                    "online-boutique-kic-443-vs": {
                         "class": "Service_TCP",
-                        "remark": "nap-online-boutique-kic-443",
+                        "remark": "online-boutique-kic-443",
                         "virtualAddresses": [
                             "10.1.10.107"
                         ],
                         "virtualPort": 443,
-                        "pool": "nap-online-boutique-kic-pool-443"
+                        "pool": "online-boutique-kic-pool-443"
                     },
-                    "nap-online-boutique-kic-pool-443": {
+                    "online-boutique-kic-pool-443": {
                         "class": "Pool",
                         "monitors": [
                             "tcp"
