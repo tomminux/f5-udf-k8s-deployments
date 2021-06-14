@@ -1,0 +1,91 @@
+apiVersion: appprotect.f5.com/v1beta1
+kind: APPolicy
+metadata:
+  name: nginx-policy
+  namespace: nap-online-boutique
+spec:
+  policy:
+    name: nginx-policy
+    template:
+      name: POLICY_TEMPLATE_NGINX_BASE
+    applicationLanguage: utf-8
+    enforcementMode: blocking
+    signature-sets:
+    - name: Command Execution Signatures
+      alarm: true
+      block: true
+    - name: Cross Site Scripting Signatures
+      alarm: true
+      block: true
+    - name: SQL Injection Signatures
+      alarm: true
+      block: true 
+    blocking-settings:
+      violations:
+      - name: VIOL_DATA_GUARD
+        alarm: true
+        block: true
+      - name: VIOL_HTTP_PROTOCOL
+        alarm: true
+        block: true
+      - name: VIOL_FILETYPE
+        alarm: true
+        block: true
+      - name: VIOL_PARAMETER_VALUE_METACHAR
+        alarm: true
+        block: true
+      - name: VIOL_PARAMETER_NUMERIC_VALUE
+        alarm: true
+        block: true
+      - name: VIOL_PARAMETER_DATA_TYPE
+        alarm: true
+        block: true  
+      - name: VIOL_RATING_NEED_EXAMINATION
+        alarm: true
+        block: true
+      - name: VIOL_EVASION
+        alarm: true
+        block: true  
+      http-protocols:
+      - description: Header name with no header value
+        enabled: true
+    parameters:
+    - name: userEmail
+      dataType: email
+    - name: textReview
+      dataType: alpha-numeric
+      metacharsOnParameterValueCheck: true
+    - name: starValue
+      dataType: integer
+      checkMaxValue: true
+      checkMinValue: true
+    filetypes:
+    - name: "*"
+      type: wildcard
+      allowed: true
+      checkPostDataLength: false
+      postDataLength: 4096
+      checkRequestLength: false
+      requestLength: 8192
+      checkUrlLength: true
+      urlLength: 2048
+      checkQueryStringLength: true
+      queryStringLength: 2048
+      responseCheck: false
+    - name: bat
+      allowed: false
+    data-guard:
+      enabled: true
+      maskData: true
+      creditCardNumbers: true
+      usSocialSecurityNumbers: true
+      enforcementMode: ignore-urls-in-list
+      enforcementUrls: []
+  modifications:
+  - entityChanges:
+      enabled: false
+    entity:
+      signatureId: 200003913
+    entityType: signature
+    action: add-or-update
+
