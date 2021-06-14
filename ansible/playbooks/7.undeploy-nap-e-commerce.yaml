@@ -1,0 +1,34 @@
+## ----------------------------------------------------------------------------
+## ..:: infra-server installation ::..
+## ----------------------------------------------------------------------------
+
+- hosts: infra-server
+  remote_user: root
+  tasks:
+
+    ## Configure and Deploy Services in "blog-apps" namespace
+
+    - name: Undeploying BIG-IP Controller Config Map 
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/nap-online-boutique/0.namespace-preparation/6.bigip-ctlr-configMap.yaml"
+
+    - name: Undeploying NGINX App Protect Log Config
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/nap-online-boutique/0.namespace-preparation/5.nap-log.yaml"
+
+    - name: Undeploying NGINX App Protect Policy
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/nap-online-boutique/0.namespace-preparation/4.1.nap-policy.yaml"
+
+    - name: Undeploying NGINX Plus Ingress Controller PODs and Services (NAP Enabled)
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/nap-online-boutique/0.namespace-preparation/3.nplus-nap.yaml"
+
+    - name: Undeploying Common NGINX Plus resources
+      become: true
+      become_user: ubuntu
+      command: /bin/bash -c "export KUBECONFIG=/home/ubuntu/.kube/config-k8s ; kubectl delete -f ~/k8s-manifests/nap-online-boutique/0.namespace-preparation/2.nginx-plus-common.yaml"
